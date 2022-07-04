@@ -50,7 +50,7 @@ const App = () => {
       <h1>Movie Land</h1>
       <div className="search">
         <input
-          placeholder= "don't just look for porn"
+          placeholder= "Don't just look for porn..."
           value={searchTerm}
           onChange={handleChange}
           onKeyDown={handleKeypress}
