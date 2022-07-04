@@ -31,7 +31,20 @@ const App = () => {
     searchMovies('Superman');
   }, []);
 
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  }
 
+  const handleSubmit = () => {
+    searchMovies(searchTerm);
+  }
+
+  const handleKeypress = (e) => {
+      //it triggers by pressing the enter key
+    if (e.keyCode === 13) {
+      handleSubmit();
+    }
+  };
 
   return (
     <div className='app'>
@@ -40,12 +53,13 @@ const App = () => {
         <input
           placeholder= "don't just look for porn"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleChange}
+          onKeyDown={handleKeypress}
         />
         <img
           src={SearchIcon}
           alt="search"
-          onClick={() => searchMovies(searchTerm)}
+          onClick={handleSubmit}
         />
       </div>
 
