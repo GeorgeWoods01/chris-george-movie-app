@@ -45,15 +45,15 @@ const App = () => {
         <img
           src={SearchIcon}
           alt="search"
-          onClick={() => searchMovies({searchTerm})}
+          onClick={() => searchMovies(searchTerm)}
         />
       </div>
 
       {movies?.length > 0
         ? (
           <div className="container">
-            {movies.map((movie) => (
-              <MovieCard movie={movie} />
+            {movies.map((movie, index) => (
+              <MovieCard movie={movie} key={index} />
             ))}
           </div>
         ) : (
