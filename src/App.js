@@ -47,6 +47,7 @@ const App = () => {
           alt="search"
           onClick={() => {}}
         />
+
       </div>
       <div className="container">
         <div className='movie'>
