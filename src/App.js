@@ -1,34 +1,34 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import SearchIcon from './search.svg';
+import MovieCard from './MovieCard';
 
 
 const API_URL = 'http://www.omdbapi.com?apikey=faf76924';
 
-const movie1 = {
-  "Title": "Debbie Does Dallas... Again",
-  "Year": "2007",
-  "imdbID": "tt1675910",
-  "Type": "series",
-  "Poster": "https://m.media-amazon.com/images/M/MV5BYWE0ZDVkMDQtOGY3YS00YjNhLWI0ZDYtZDYyZjEwNjdlZDE0XkEyXkFqcGdeQXVyMTIxMDUyOTI@._V1_SX300.jpg"
-}
+// const movie1 = {
+//   "Title": "Debbie Does Dallas... Again",
+//   "Year": "2007",
+//   "imdbID": "tt1675910",
+//   "Type": "series",
+//   "Poster": "https://m.media-amazon.com/images/M/MV5BYWE0ZDVkMDQtOGY3YS00YjNhLWI0ZDYtZDYyZjEwNjdlZDE0XkEyXkFqcGdeQXVyMTIxMDUyOTI@._V1_SX300.jpg"
+// }
 
 const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const searchMovies = async (title) => {
     const response = await fetch (`${API_URL}&s=${title}`)
     const data = await response.json();
 
-    console.log(data.Search);
+    setMovies(data.Search);
 
   }
 
 
   useEffect(() => {
-    searchMovies('Batman');
-
-
-
+    searchMovies('Superman');
   }, []);
 
 
@@ -39,32 +39,30 @@ const App = () => {
       <div className="search">
         <input
           placeholder= "don't just look for porn"
-          value="Superman"
-          onChange={() => {}}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <img
           src={SearchIcon}
           alt="search"
-          onClick={() => {}}
+          onClick={() => searchMovies({searchTerm})}
         />
+      </div>
 
-      </div>
-      <div className="container">
-        <div className='movie'>
-          <div>
-            <p>{movie1.Year}</p>
+      {movies?.length > 0
+        ? (
+          <div className="container">
+            {movies.map((movie) => (
+              <MovieCard movie={movie} />
+            ))}
           </div>
-          <div>
-            <img src={movie1.Poster !== 'N/A' ? movie1.Poster : 'https://via.placeholder.com/400' } alt={movie1.Title} />
+        ) : (
+          <div className='empty'>
+            <h2>No movies found</h2>
           </div>
-          <div>
-            <span>{movie1.Type}</span>
-            <h3>{movie1.Title}</h3>
-          </div>
-        </div>
-      </div>
+        )}
     </div>
-  )
+  );
 }
 
 export default App;
